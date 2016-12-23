@@ -22,6 +22,12 @@
             <artifactId>metrics-core</artifactId>
             <version>3.0.2</version>
         </dependency>
+        <dependency> <!-- Spark dependency -->
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.10</artifactId>
+            <version>1.6.2</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>

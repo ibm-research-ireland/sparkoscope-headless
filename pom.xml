@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ibm</groupId>
-  <artifactId>sparkoscope-headless</artifactId>
+  <artifactId>sparkoscope-headless_${spark.version}_${scala.version.short}</artifactId>
   <packaging>pom</packaging>
-  <version>1.6.2</version>
+  <version>0.1.0</version>
 
   <properties>
     <spark.version>1.6.2</spark.version>
@@ -16,5 +16,4 @@
     <module>sparkoscope-sigarsource</module>
     <module>sparkoscope-hdfssink</module>
   </modules>
-  <name>sparkoscope-headless</name>
 </project>

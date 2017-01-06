@@ -333,7 +333,7 @@ public class HDFSReporter extends ScheduledReporter {
     }
 
     private boolean setHadoopConf() {
-        configuration = SparkHadoopUtil.get().newConfiguration();
+        configuration = SparkHadoopUtil.get().newConfiguration(null);
         try {
             fileSystem = Utils.getHadoopFileSystem(new URI(directory), configuration);
         } catch (Exception e) {

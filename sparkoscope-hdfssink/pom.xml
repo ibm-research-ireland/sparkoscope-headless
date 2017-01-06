@@ -3,24 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sparkoscope-headless</artifactId>
+        <artifactId>sparkoscope-headless_${spark.version}_${scala.version.short}</artifactId>
         <groupId>com.ibm</groupId>
-        <version>1.6.2</version>
+        <version>0.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sparkoscope-hdfssink</artifactId>
+    <artifactId>sparkoscope-hdfssink_${spark.version}_${scala.version.short}</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.10.6</version>
+            <version>${scala.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency> <!-- Spark dependency -->
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.10</artifactId>
-            <version>1.6.2</version>
+            <artifactId>spark-core_${scala.version.short}</artifactId>
+            <version>${spark.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -40,7 +40,7 @@ private[spark] class SigarSource() extends Source {
   var previousBytesRead: Long = initialDiskMetrics.bytesRead
   var previousBytesReadMeasurement: Double = 0.0
 
-  metricRegistry.register(MetricRegistry.name("sigar.kBytesTxPerSecond"), new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("kBytesTxPerSecond"), new Gauge[Double] {
     override def getValue: Double = {
       val currentMetrics: NetworkMetrics = getNetworkMetrics()
       val currentDate: Long = new Date().getTime
@@ -62,7 +62,7 @@ private[spark] class SigarSource() extends Source {
     }
   })
 
-  metricRegistry.register(MetricRegistry.name("sigar.kBytesRxPerSecond"), new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("kBytesRxPerSecond"), new Gauge[Double] {
     override def getValue: Double = {
       val currentMetrics: NetworkMetrics = getNetworkMetrics()
       val currentDate: Long = new Date().getTime
@@ -84,7 +84,7 @@ private[spark] class SigarSource() extends Source {
     }
   })
 
-  metricRegistry.register(MetricRegistry.name("sigar.kBytesWrittenPerSecond"), new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("kBytesWrittenPerSecond"), new Gauge[Double] {
     override def getValue: Double = {
       val currentMetrics: DiskMetrics = getDiskMetrics()
       val currentDate: Long = new Date().getTime
@@ -106,7 +106,7 @@ private[spark] class SigarSource() extends Source {
     }
   })
 
-  metricRegistry.register(MetricRegistry.name("sigar.kBytesReadPerSecond"), new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("kBytesReadPerSecond"), new Gauge[Double] {
     override def getValue: Double = {
       val currentMetrics: DiskMetrics = getDiskMetrics()
       val currentDate: Long = new Date().getTime
@@ -128,7 +128,7 @@ private[spark] class SigarSource() extends Source {
     }
   })
 
-  metricRegistry.register(MetricRegistry.name("sigar.cpu"),new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("cpu"),new Gauge[Double] {
     override def getValue: Double = {
       try{
         sigar.getCpuPerc.getCombined*100.0
@@ -142,7 +142,7 @@ private[spark] class SigarSource() extends Source {
     }
   })
 
-  metricRegistry.register(MetricRegistry.name("sigar.ram"),new Gauge[Double] {
+  metricRegistry.register(MetricRegistry.name("ram"),new Gauge[Double] {
     override def getValue: Double = {
       try{
         sigar.getMem.getUsedPercent

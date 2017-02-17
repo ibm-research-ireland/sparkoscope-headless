@@ -13,36 +13,88 @@ private[spark] class SigarSource() extends Source {
   override val metricRegistry: MetricRegistry = new MetricRegistry
 
   val LOGGER = LoggerFactory.getLogger(classOf[SigarSource])
-  val sigar = new Sigar()
+  val sigar = new Sigar
+
+  def pid = sigar.getPid
 
   register(metricRegistry, new StatefulMetric {
-    override val name = "kBytesTxPerSecond"
-    override def momentaryValue = networkMetrics().bytesTx / 1024f
+    override val name = "network.sent_per_second"
+    override def momentaryValue = networkMetrics().bytesTx
   })
 
   register(metricRegistry, new StatefulMetric {
-    override val name = "kBytesRxPerSecond"
-    override def momentaryValue = networkMetrics.bytesRx / 1024f
+    override val name = "network.received_per_second"
+    override def momentaryValue = networkMetrics.bytesRx
   })
 
   register(metricRegistry, new StatefulMetric {
-    override val name = "kBytesWrittenPerSecond"
-    override def momentaryValue = diskMetrics.bytesWritten / 1024f
+    override val name = "disk.written_per_second"
+    override def momentaryValue = diskMetrics.bytesWritten
   })
 
   register(metricRegistry, new StatefulMetric {
-    override val name = "kBytesReadPerSecond"
-    override def momentaryValue = diskMetrics.bytesRead / 1024f
+    override val name = "disk.read_per_second"
+    override def momentaryValue = diskMetrics.bytesRead
   })
 
   register(metricRegistry, new Metric[Double] {
-    override def name: String = "cpu"
-    override def value: Double = sigar.getCpuPerc.getCombined * 100f
+    override def name = "cpu.host.count"
+    override def value = sigar.getCpuInfoList.length
   })
 
-  register(metricRegistry, new Metric[Double] {
-    override def name: String = "ram"
-    override def value: Double = sigar.getMem.getUsedPercent
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.host.sys"
+    override def momentaryValue = sigar.getCpu.getSys 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.host.user"
+    override def momentaryValue = sigar.getCpu.getUser 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.host.wait"
+    override def momentaryValue = sigar.getCpu.getWait 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.host.total"
+    override def momentaryValue = sigar.getCpu.getTotal 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.process.sys"
+    override def momentaryValue = sigar.getProcCpu(pid).getSys 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.process.user"
+    override def momentaryValue = sigar.getProcCpu(pid).getUser 
+  })
+
+  register(metricRegistry, new StatefulMetric {
+    override val name = "cpu.process.total"
+    override def momentaryValue = sigar.getProcCpu(pid).getTotal 
+  })
+
+  register(metricRegistry, new Metric[Long] {
+    override def name = "memory.host.total"
+    override def value = sigar.getMem.getTotal
+  })
+
+  register(metricRegistry, new Metric[Long] {
+    override def name = "memory.host.used"
+    override def value = sigar.getMem.getUsed
+  })
+
+  register(metricRegistry, new Metric[Long] {
+    override def name = "memory.host.free"
+    override def value = sigar.getMem.getFree
+  })
+
+  register(metricRegistry, new Metric[Long] {
+    override def name = "memory.process.total"
+    override def value = sigar.getProcMem(pid).getSize
   })
 
   case class NetworkMetrics(bytesRx: Long, bytesTx: Long)

@@ -4,7 +4,7 @@
   <groupId>com.ibm</groupId>
   <artifactId>sparkoscope-headless</artifactId>
   <packaging>pom</packaging>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
 
   <properties>
     <spark.version>1.6.2</spark.version>
